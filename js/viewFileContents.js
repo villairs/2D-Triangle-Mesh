@@ -1,13 +1,23 @@
-function readInputFile(file){
-    var arr = []
-    var inputFile = new File(file);
-    inputFile.open("r");
+window.onload = function(){
 
-    var looplen = inputFile.readln(); //dont really need this, just need to get rid of the first line
+    var fileSelected = document.getElementById("txtfiletoread");
+    fileSelected.addEventListener('change',function(e){
+    
+        var requiredFileExtension =    /text.*/;
+        var file = fileSelected.files[0];
 
-    while(!inputFile.eof){
-        arr.push(inputFile.readln());
-    }
+        if(file.type.match(requiredFileExtension)){
+            var reader = new FileReader();
+            reader.onload = function (e){
+ 
+            var fileContents = document.getElementById("filecontents");
+            fileContents.innerText = reader.result;
+            }
+            reader.readAsText(file);
+        }
+
+    },false)
+
 }
 
-document.getElementById("filecontents").innerHTML = readInputFile(document.getElementById(txtfiletoread));
+
